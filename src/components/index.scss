@@ -1,0 +1,77 @@
+.game-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.game-board {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  padding: 30px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.board-body {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 0;
+}
+
+.chess-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 60px);
+  grid-template-rows: repeat(8, 60px);
+  flex-shrink: 0;
+  background-image: linear-gradient(0deg, #c60bff, #000baa);
+  background-size: 100% 100%;
+  background-clip: content-box;
+  padding: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.chess-cell {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  border: 1px solid #92e4ffa9;
+
+  svg {
+    filter: drop-shadow(0 0 1px #000) brightness(1) contrast(1.5);
+  }
+}
+
+.cell-light {
+  background: transparent;
+}
+
+.cell-dark {
+  background: #09003fc2;
+}
+
+.chess-piece {
+  font-size: 2.2rem;
+}
