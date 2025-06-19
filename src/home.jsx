@@ -18,32 +18,31 @@ import maskot_success from "./assets/robot-4.png";
 import { WordleGame } from "./components/templates/wordle";
 import sponsor from "./assets/sponsor.png"
 import { RiTwitterXFill } from "react-icons/ri";
+import { BsCheck2 } from "react-icons/bs";
+import { RxCross2 } from "react-icons/rx";
 
-const randomSponsor = () =>
-  ["Netflix", "SpaceX", "OpenAI", "Tesla", "Starbucks"][
-  Math.floor(Math.random() * 5)
-  ];
 const randomCaptcha = () =>
   Array.from(
     { length: 5 },
     () => "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[Math.floor(Math.random() * 32)]
   ).join("");
-const randomGeo = () =>
-  [
-    { lat: 60.1699, lng: 24.9384 }, // Helsinki
-    { lat: 52.52, lng: 13.405 }, // Berlin
-    { lat: 35.6895, lng: 139.6917 }, // Tokyo
-    { lat: 59.9139, lng: 10.7522 }, // Oslo
-    { lat: 48.8566, lng: 2.3522 }, // Paris
-    { lat: 51.5074, lng: -0.1278 }, // London
-    { lat: 40.7128, lng: -74.0060 }, // New York
-    { lat: 34.0522, lng: -118.2437 }, // Los Angeles
-    { lat: 37.7749, lng: -122.4194 }, // San Francisco
-    { lat: 41.9028, lng: 12.4964 }, // Rome
-    { lat: 55.7558, lng: 37.6176 }, // Moscow
-  ][Math.floor(Math.random() * 4)];
+const randomGeo = () => {
+  const geoList = [
+    { lat: 60.1699, lng: 24.9384, city: "Helsinki" },
+    { lat: 52.52, lng: 13.405, city: "Berlin" },
+    { lat: 35.6895, lng: 139.6917, city: "Tokyo" },
+    { lat: 59.9139, lng: 10.7522, city: "Oslo" },
+    { lat: 48.8566, lng: 2.3522, city: "Paris" },
+    { lat: 51.5074, lng: -0.1278, city: "London" },
+    { lat: 40.7128, lng: -74.0060, city: "New York" },
+    { lat: 34.0522, lng: -118.2437, city: "Los Angeles" },
+    { lat: 37.7749, lng: -122.4194, city: "San Francisco" },
+    { lat: 41.9028, lng: 12.4964, city: "Rome" },
+    { lat: 55.7558, lng: 37.6176, city: "Moscow" },
+  ];
+  return geoList[Math.floor(Math.random() * geoList.length)];
+};
 
-const sponsorValue = randomSponsor();
 const captchaValue = randomCaptcha();
 const geoValue = randomGeo();
 
@@ -126,7 +125,7 @@ const getRandomPiecePosition = (board) => {
   return { position: `${col}${row}`, piece: board[pos]?.type };
 };
 
-const ChessComponent = ({ position }) => {
+const ChessComponent = () => {
   const board = useMemo(() => getRandomChessBoard(), []);
   const target = useMemo(() => getRandomPiecePosition(board), [board]);
   const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -267,7 +266,7 @@ const rules = [
   {
     id: 9,
     desc: "Include any sponsor name your password",
-    validate: (pwd) => new RegExp(sponsorValue, "i").test(pwd),
+    validate: (pwd) => ["netflix", "spacex", "openai", "tesla", "starbucks"].includes(pwd.toLowerCase()),
     component: SponsorComponent,
   },
   {
@@ -296,7 +295,7 @@ const rules = [
   {
     id: 15,
     desc: "Include geo coords.",
-    validate: (pwd) => new RegExp(`${geoValue.lat}, ${geoValue.lng}`).test(pwd),
+    validate: (pwd) => new RegExp(`${geoValue.city}`).test(pwd),
     component: GeoComponent,
   },
   {
@@ -354,7 +353,12 @@ export const App = () => {
       <span className="df aic jcc follow">
         <RiTwitterXFill />
       </span>
-      <h1 className="title">The Enchanted Password</h1>
+      <div className="df fdc aic gap-5">
+        <h1 className="title">The Enchanted Password</h1>
+        <span>
+          Try to come up with the perfect password that meets all the rules below.
+        </span>
+      </div>
       <div className="glass-card">
         <input
           type="text"
@@ -365,21 +369,21 @@ export const App = () => {
         />
       </div>
       <div className="maskot-wrapper">
-        <div className="dialog-box">
+        <div className="df dialog-box">
+          {/* <img
+            src={
+              {
+                loading: maskot_loading,
+                success: maskot_success,
+                error: maskot_error,
+                default: maskot_warning,
+              }[status]
+            }
+            alt="Maskot"
+            className="maskot"
+          /> */}
           <span>{dialog}</span>
         </div>
-        <img
-          src={
-            {
-              loading: maskot_loading,
-              success: maskot_success,
-              error: maskot_error,
-              default: maskot_warning,
-            }[status]
-          }
-          alt="Maskot"
-          className="maskot"
-        />
       </div>
       <div className="rules-list">
         <AnimatePresence>
@@ -394,9 +398,9 @@ export const App = () => {
                 : rule.validate(password)
                   ? "passed"
                   : "pending"
-                } glass-card`}
+                } df fdc gap-5 glass-card`}
             >
-              <span>Rule #{rule.id}</span> <br />
+              <span className="w100 df aic gap-5">{rule.validate(password) ? <BsCheck2 className="check" /> : <RxCross2 className="cross" />}Rule #{rule.id}</span>
               {rule.component ? <rule.component setOpenWordle={setOpenWordle} /> : rule.desc}
             </motion.div>
           ))}

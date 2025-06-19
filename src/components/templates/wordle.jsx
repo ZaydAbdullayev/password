@@ -102,6 +102,12 @@ export const WordleGame = ({ newWord, onClose }) => {
                     onChange={(e) => setInput(e.target.value.toUpperCase())}
                     className="guess-input"
                     placeholder="Type your guess..."
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
                     <button onClick={handleSubmit} className="submit-btn">Submit</button>
