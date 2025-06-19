@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kranky&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap");
 
 * {
   margin: 0;
@@ -6,7 +6,7 @@
   box-sizing: border-box;
   letter-spacing: 0.1rem;
   word-spacing: 4px;
-  font-family: "Kranky", serif;
+  font-family: "Syne Mono", monospace;
 }
 
 html {
@@ -15,7 +15,6 @@ html {
 
 body {
   margin: 0;
-  font-family: "Inter", sans-serif;
 }
 
 * {
